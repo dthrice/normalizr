@@ -5,3 +5,5 @@ dist/*
 *.log
 coverage/*
 .coveralls.yml
+.idea
+atlassian-ide-plugin.xml

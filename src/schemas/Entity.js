@@ -10,6 +10,7 @@ export default class EntitySchema {
     }
 
     const {
+      postDenormalize = (entity) => entity,
       idAttribute = 'id',
       mergeStrategy = (entityA, entityB) => {
         return { ...entityA, ...entityB };
@@ -22,6 +23,7 @@ export default class EntitySchema {
     this._idAttribute = idAttribute;
     this._mergeStrategy = mergeStrategy;
     this._processStrategy = processStrategy;
+    this._postDenormalize = postDenormalize;
     this.define(definition);
   }
 
@@ -72,6 +74,6 @@ export default class EntitySchema {
         entity[key] = unvisit(entity[key], schema);
       }
     });
-    return entity;
+    return this._postDenormalize(entity);
   }
 }
